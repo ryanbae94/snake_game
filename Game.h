@@ -2,6 +2,7 @@
 #define __GAME__
 
 #include <vector>
+#include "map_displayList.h"
 
 class Snake;
 
