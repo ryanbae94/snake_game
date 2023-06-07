@@ -18,4 +18,8 @@ class Game {
         Snake *snake;
 };
 
+//Display::map function
+void cell_color_init(); //화면 구성용 Cell Color 지정
+void map_set();         //Map 출력력
+
 #endif
