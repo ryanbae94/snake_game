@@ -1,5 +1,9 @@
 #include "SnakeGame.h"
 
+SnakeGame::SnakeGame(){
+    init();
+}
+
 void SnakeGame::init(){
     display.init();
     display.init_coloring();
