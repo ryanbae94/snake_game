@@ -15,20 +15,20 @@ Snake::Snake(){
   cur_direction = down;
 }
 
-void Snake::addPiece(SnakeBody piece){
-  prev_pieces.push(piece);
+void Snake::addBody(SnakeBody body){
+  prev_bodies.push(body);
 }
 
-void Snake::removePiece(){
-  prev_pieces.pop();
+void Snake::removeBody(){
+  prev_bodies.pop();
 }
 
 SnakeBody Snake::tail(){
-  return prev_pieces.front();
+  return prev_bodies.front();
 }
 
 SnakeBody Snake::head(){
-  return prev_pieces.back();
+  return prev_bodies.back();
 }
 
 Direction Snake::getDirection(){
