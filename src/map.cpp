@@ -5,6 +5,7 @@ void Display::init(){
   int xMax, yMax;
   getmaxyx(stdscr, yMax, xMax);
   snake_win = newwin(25, 25, (yMax/2)-12, (xMax/2)-12);
+  keypad(snake_win, true);
 }
 
 void Display::init_coloring(){
@@ -23,13 +24,42 @@ void Display::coloring(int stage_num){
   for(int i = 0; i < 25; i++){
     for(int j = 0; j < 25; j++){
       wattron(snake_win, COLOR_PAIR(map[stage_num][i][j] + 1));
-      mvwprintw(snake_win, i, j, "%d", map[stage_num][i][j]);
-      wattroff(snake_win, COLOR_PAIR(map[stage_num][i][j] + 1));
+      mvwprintw(snake_win, i, j, "-");
+      // wattroff(snake_win, COLOR_PAIR(map[stage_num][i][j] + 1));
     }
   }
   wrefresh(snake_win);
 }
 
+void Display::addBorder(){
+  box(snake_win, 0, 0);
+}
+
+void Display::add(Drawing drawing){
+  addAt(drawing.getY(), drawing.getX(), drawing.getData());
+}
+
+void Display::getEmptyCoordinates(int& y, int& x){
+  while((mvwinch(snake_win, y = rand() % 25, x = rand() % 25)) != 0);
+}
+
+void Display::addAt(int y, int x, int ch){
+  mvwaddch(snake_win, y, x, ch);
+}
+
+chtype Display::getInput(){
+  return wgetch(snake_win);
+}
+
+int Display::getCharAt(int y, int x){
+  return mvwinch(snake_win, y, x);
+}
+
 void Display::refresh(){
   wrefresh(snake_win);
+}
+
+void Display::clear(){
+  wclear(snake_win);
+  addBorder();
 }
