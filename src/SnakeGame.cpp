@@ -11,6 +11,10 @@ void SnakeGame::init(){
     game_over = false;
 }
 
+void SnakeGame::updateState(){
+  
+}
+
 void SnakeGame::redraw(){
   display.refresh();
 }
