@@ -1,5 +1,5 @@
-#ifndef __GAME__
-#define __GAME__
+#ifndef __SNAKEGAME__
+#define __SNAKEGAME__
 
 #include <iostream>
 #include <ncurses.h>
@@ -7,7 +7,6 @@
 #include <time.h>
 #include <chrono>
 #include <queue>
-#include <vector>
 
 //00. define
 #define COLOR_GRAY 8
@@ -19,36 +18,52 @@ enum Direction{
   right = 2
 };
 
-//01. Snake map
-class Display{
-  WINDOW * snake_win;
-  int height, width, start_row, start_col;
-  int timeout;
-  void construct(int height, int width, int speed);
+//02.Snake & Item
+class Drawing{
 public:
-  void init();
-  void init_coloring();
-  void coloring(int stage_num);
-  void addBorder();
-  void refresh();
-  void clear();
+  Drawing(){
+    y = x = 0;
+    data = 8;
+  }
+  Drawing(int y, int x, int ch);
+  int getX();
+  int getY();
+  int getData();
+
+protected:
+  int y, x, data;
 };
 
-//02. Snake
+class GrowthItem:public Drawing{
+public:
+  GrowthItem(int y, int x);
+};
+
+class PoisonItem:public Drawing{
+public:
+  PoisonItem(int y, int x);
+};
+
+class BlankData:public Drawing{
+public:
+  BlankData(int y, int x);
+};
+
 class SnakeBody:public Drawing{
 public:
   SnakeBody();
   SnakeBody(int y, int x);
+  void setData(int data);
 };
 
 class Snake{
-  std::queue<SnakeBody> prev_pieces;
+  std::queue<SnakeBody> prev_bodies;
   Direction cur_direction;
 
 public:
   Snake();
-  void addPiece(SnakeBody piece);
-  void removePiece();
+  void addBody(SnakeBody body);
+  void removeBody();
   SnakeBody tail();
   SnakeBody head();
   Direction getDirection();
@@ -56,23 +71,50 @@ public:
   SnakeBody nextHead();
 };
 
-//Game Setting
+// 01. Snake map
+class Display{
+  WINDOW * snake_win;
+  int height, width, start_row, start_col;
+  int timeout;
+
+public:
+  void init();
+  void init_coloring();
+  void coloring(int stage_num);
+  void addBorder();
+  void add(Drawing drawing);
+  void addAt(int y, int x, int ch);
+  chtype getInput();
+  void getEmptyCoordinates(int& y, int& x);
+  int getCharAt(int y, int x);
+  void refresh();
+  void clear();
+};
+
 class SnakeGame{
   Display display;
   bool game_over;
   int stage_count = 0;
+  Snake snake;
+  PoisonItem *poisonItem;
+  GrowthItem *growthItem;
+
+  void handleNextBody(SnakeBody next);
+  void createGrowth();
+  void getGrowth();
+  void createPoison();
+  void getPoison();
 
 public:
   SnakeGame();
-  // ~SnakeGame();
+  ~SnakeGame();
 
   void init();
+  void processInput();
   void updateState();
   void redraw();
   bool isOver();
   int getStageCount();
 };
-
-
 
 #endif
