@@ -1,6 +1,12 @@
 #include "SnakeGame.h"
 #include "map.h"
 
+void Display::init(){
+  int xMax, yMax;
+  getmaxyx(stdscr, yMax, xMax);
+  snake_win = newwin(25, 25, (yMax/2)-12, (xMax/2)-12);
+}
+
 void Display::init_coloring(){
   init_color(COLOR_GRAY, 500, 500, 500);
   init_pair(1, COLOR_WHITE, COLOR_WHITE); //(0)Blank
