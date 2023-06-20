@@ -9,6 +9,7 @@ void SnakeGame::init(){
     display.init_coloring();
     display.coloring(stage_count);
     game_over = false;
+    srand(time(NULL));
 }
 
 void SnakeGame::updateState(){
