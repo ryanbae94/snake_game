@@ -11,11 +11,6 @@
 
 class Snake;
 
-class SnakeGame {
-    Display display;
-    bool game_over;
-    int stage_count = 0;
-
 class Display{
   WINDOW * snake_win;
   int height, width, start_row, start_col;
@@ -28,22 +23,19 @@ public:
   void refresh();
 };
 
+
+class SnakeGame {
+    Display display;
+    bool game_over;
+    int stage_count = 0;
+
 public:
-    SnakeGame(){
-        display = Display();
-        init();
-    }
-
-    void init(){
-        display.init();
-        display.init_coloring();
-        display.coloring(stage_count);
-        game_over = false;
-    }
-
-        void makeGate();
-        void clearGate();
-        bool isMakingGateNow(int n);
+    SnakeGame();
+    void init();
+    void updateState();
+    void redraw();
+    bool isOver();
+    int getStageCount();
 };
 
 
