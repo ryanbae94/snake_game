@@ -1,5 +1,20 @@
 #include "SnakeGame.h"
 
+SnakeBody::SnakeBody(){
+  this->x = this->y = 0;
+  this->data = 4;
+}
+
+SnakeBody::SnakeBody(int y, int x){
+  this->x = x;
+  this->y = y;
+  this->data = 4;
+}
+
+Snake::Snake(){
+  cur_direction = down;
+}
+
 void Snake::addPiece(SnakeBody piece){
   prev_pieces.push(piece);
 }
