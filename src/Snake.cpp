@@ -11,6 +11,10 @@ SnakeBody::SnakeBody(int y, int x){
   this->data = 4;
 }
 
+void SnakeBody::setData(int data){
+  this->data = data;
+}
+
 Snake::Snake(){
   cur_direction = down;
 }
@@ -20,6 +24,8 @@ void Snake::addBody(SnakeBody body){
 }
 
 void Snake::removeBody(){
+  SnakeBody body = SnakeBody(tail().getY(), tail().getX());
+  body.setData(0);
   prev_bodies.pop();
 }
 
